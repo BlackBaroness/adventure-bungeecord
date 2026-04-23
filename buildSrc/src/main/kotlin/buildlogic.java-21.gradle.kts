@@ -1,13 +1,13 @@
 plugins {
-    java
+  java
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
 }
 
 tasks.withType<JavaCompile>() {
-    options.release = 21
+  options.release = 21
 }

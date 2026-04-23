@@ -1,12 +1,12 @@
 plugins {
-    `java-library`
-    id("buildlogic.java-21")
+  id("buildlogic.java-21")
+  id("buildlogic.publish")
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    compileOnly(libs.adventure.api)
+  api(libs.adventure.api)
 }
