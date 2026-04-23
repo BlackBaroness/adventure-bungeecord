@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.json.JSONOptions;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +50,7 @@ public final class BungeeComponentSerializer implements ComponentSerializer<@Not
   }
 
   private static final BungeeComponentSerializer MODERN = new BungeeComponentSerializer(GsonComponentSerializer.gson(), LegacyComponentSerializer.builder().hexColors().useUnusualXRepeatedCharacterHexFormat().build());
-
+  private static final BungeeComponentSerializer PRE_1_16 = new BungeeComponentSerializer(GsonComponentSerializer.builder().editOptions(builder -> builder.value(JSONOptions.EMIT_RGB, false)).build(), LegacyComponentSerializer.legacySection());
   /**
    * Gets whether the component serializer has native support.
    *
