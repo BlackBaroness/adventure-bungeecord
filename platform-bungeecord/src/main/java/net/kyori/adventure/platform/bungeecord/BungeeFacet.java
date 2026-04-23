@@ -95,7 +95,7 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
     }
 
     @Override
-    public BaseComponent @NotNull[] createMessage(final @NotNull CommandSender viewer, final @NotNull Component message) {
+    public BaseComponent @NotNull [] createMessage(final @NotNull CommandSender viewer, final @NotNull Component message) {
       return LEGACY.serialize(message);
     }
 
@@ -111,7 +111,7 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
     }
 
     @Override
-    public BaseComponent @NotNull[] createMessage(final @NotNull ProxiedPlayer viewer, final @NotNull Component message) {
+    public BaseComponent @NotNull [] createMessage(final @NotNull ProxiedPlayer viewer, final @NotNull Component message) {
       if (viewer.getPendingConnection().getVersion() >= PROTOCOL_HEX_COLOR) {
         return MODERN.serialize(message);
       } else {
@@ -142,7 +142,7 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
 
     @Override
     public void sendMessage(final @NotNull ProxiedPlayer viewer, final @NotNull Identity source, final BaseComponent @NotNull [] message, final @NotNull Object type) {
-        super.sendMessage(viewer, source, message, type);
+      viewer.sendMessage(source.uuid(), message);
     }
   }
 
@@ -150,13 +150,13 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
 
     @Override
     public void sendMessage(final @NotNull ProxiedPlayer viewer, final @NotNull Identity source, final BaseComponent @NotNull [] message, final @NotNull Object type) {
-      viewer.sendMessage(ChatMessageType.CHAT, message);
+      viewer.sendMessage(message);
     }
   }
 
   static class ActionBar extends Message implements Facet.ActionBar<ProxiedPlayer, BaseComponent[]> {
     @Override
-    public void sendMessage(final @NotNull ProxiedPlayer viewer, final BaseComponent @NotNull[] message) {
+    public void sendMessage(final @NotNull ProxiedPlayer viewer, final BaseComponent @NotNull [] message) {
       viewer.sendMessage(ChatMessageType.ACTION_BAR, message);
     }
   }
@@ -171,12 +171,12 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
     }
 
     @Override
-    public void contributeTitle(final net.md_5.bungee.api.@NotNull Title coll, final BaseComponent@NotNull[] title) {
+    public void contributeTitle(final net.md_5.bungee.api.@NotNull Title coll, final BaseComponent @NotNull [] title) {
       coll.title(title);
     }
 
     @Override
-    public void contributeSubtitle(final net.md_5.bungee.api.@NotNull Title coll, final BaseComponent@NotNull[] subtitle) {
+    public void contributeSubtitle(final net.md_5.bungee.api.@NotNull Title coll, final BaseComponent @NotNull [] subtitle) {
       coll.subTitle(subtitle);
     }
 
@@ -349,7 +349,7 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
   static final class TabList extends Message implements Facet.TabList<ProxiedPlayer, BaseComponent[]> {
 
     @Override
-    public void send(final ProxiedPlayer viewer, final BaseComponent@Nullable[] header, final BaseComponent@Nullable[] footer) {
+    public void send(final ProxiedPlayer viewer, final BaseComponent @Nullable [] header, final BaseComponent @Nullable [] footer) {
       viewer.setTabHeader(
         header == null ? EMPTY_COMPONENT_ARRAY : header,
         footer == null ? EMPTY_COMPONENT_ARRAY : footer);
