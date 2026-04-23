@@ -184,6 +184,18 @@ public class FacetAudience<V> implements Audience, Closeable {
   }
 
   @Override
+  public void sendMessage(@NotNull Component original) {
+    if (this.chat == null) return;
+
+    final Object message = this.createMessage(original, this.chat);
+    if (message == null) return;
+
+    for (final V viewer : this.viewers) {
+      this.chat.sendMessage(viewer, Identity.nil(), message, Void.TYPE);
+    }
+  }
+
+  @Override
   public void sendMessage(final @NotNull Component original, final ChatType.@NotNull Bound boundChatType) {
     if (this.chat == null) return;
     final Object message = this.createMessage(original, this.chat);
