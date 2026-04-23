@@ -56,7 +56,6 @@ import org.jetbrains.annotations.Nullable;
 import static net.kyori.adventure.platform.bungeecord.BungeeReflection.findMethod;
 import static net.kyori.adventure.platform.bungeecord.BungeeReflection.hasMethod;
 import static net.kyori.adventure.platform.facet.Knob.logError;
-import static net.kyori.adventure.platform.facet.Knob.logUnsupported;
 
 class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
   static final BaseComponent[] EMPTY_COMPONENT_ARRAY = new BaseComponent[0];

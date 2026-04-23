@@ -26,10 +26,8 @@ package net.kyori.adventure.platform.bungeecord;
 import java.util.Collection;
 import net.kyori.adventure.platform.facet.Facet;
 import net.kyori.adventure.platform.facet.FacetAudience;
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.jetbrains.annotations.NotNull;
 
 final class BungeeAudience extends FacetAudience<CommandSender> {
   private static final Collection<Facet.Chat<? extends CommandSender, ?>> CHAT = Facet.of(
@@ -52,10 +50,5 @@ final class BungeeAudience extends FacetAudience<CommandSender> {
 
   BungeeAudience(final BungeeAudiencesImpl provider, final Collection<? extends CommandSender> viewers) {
     super(provider, viewers, CHAT, ACTION_BAR, TITLE, null, null, null, BOSS_BAR, TAB_LIST, POINTERS);
-  }
-
-  @Override
-  public void sendMessage(@NotNull Component message) {
-
   }
 }
