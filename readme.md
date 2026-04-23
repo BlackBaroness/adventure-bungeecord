@@ -1,6 +1,6 @@
 Adventure for BungeeCord, updated.
 
-Add it to your project: https://jitpack.io/#BlackBaroness/adventure-text-serializer-bungeecord
+Add it to your project: https://jitpack.io/#BlackBaroness/adventure-bungeecord
 
 ```kotlin
 val version = "5.0.1-1"
