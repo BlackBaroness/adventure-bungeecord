@@ -1,6 +1,6 @@
 plugins {
-  id("buildlogic.java-21")
-  id("buildlogic.publish")
+  buildlogic.`java-21`
+  buildlogic.publish
 }
 
 repositories {
