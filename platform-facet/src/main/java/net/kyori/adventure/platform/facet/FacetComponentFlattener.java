@@ -30,9 +30,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
+import net.kyori.adventure.text.TranslationArgument;
 import net.kyori.adventure.text.flattener.ComponentFlattener;
 import net.kyori.adventure.translation.GlobalTranslator;
-import net.kyori.adventure.translation.TranslationRegistry;
+import net.kyori.adventure.translation.TranslationStore;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -66,7 +67,7 @@ public final class FacetComponentFlattener {
     flattenerBuilder.complexMapper(TranslatableComponent.class, (translatable, consumer) -> {
       final String key = translatable.key();
       for (final net.kyori.adventure.translation.Translator registry : GlobalTranslator.translator().sources()) {
-        if (registry instanceof TranslationRegistry && ((TranslationRegistry) registry).contains(key)) {
+        if (registry instanceof TranslationStore<?> store && store.contains(key)) {
           consumer.accept(GlobalTranslator.render(translatable, Locale.getDefault()));
           return;
         }
@@ -74,7 +75,7 @@ public final class FacetComponentFlattener {
 
       final @NotNull String translated = translator == null ? key : translator.valueOrDefault(instance, key);
       final Matcher matcher = LOCALIZATION_PATTERN.matcher(translated);
-      final List<Component> args = translatable.args();
+      final List<TranslationArgument> args = translatable.arguments();
       int argPosition = 0;
       int lastIdx = 0;
       while (matcher.find()) {
@@ -88,7 +89,7 @@ public final class FacetComponentFlattener {
           try {
             final int idx = Integer.parseInt(argIdx) - 1;
             if (idx < args.size()) {
-              consumer.accept(args.get(idx));
+              consumer.accept(args.get(idx).asComponent());
             }
           } catch (final NumberFormatException ex) {
             // ignore, drop the format placeholder
@@ -96,7 +97,7 @@ public final class FacetComponentFlattener {
         } else {
           final int idx = argPosition++;
           if (idx < args.size()) {
-            consumer.accept(args.get(idx));
+            consumer.accept(args.get(idx).asComponent());
           }
         }
       }

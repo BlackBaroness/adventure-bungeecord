@@ -31,7 +31,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
-import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.sound.SoundStop;
 import net.kyori.adventure.text.Component;
@@ -195,23 +194,6 @@ public interface Facet<V> {
     byte TYPE_CHAT = 0;
     byte TYPE_SYSTEM = 1;
     byte TYPE_ACTION_BAR = 2;
-
-    /**
-     * Creates a message type.
-     *
-     * @param type a message type
-     * @return an ordinal
-     * @since 4.0.0
-     */
-    default byte createMessageType(final @NotNull MessageType type) {
-      if (type == MessageType.CHAT) {
-        return TYPE_CHAT;
-      } else if (type == MessageType.SYSTEM) {
-        return TYPE_SYSTEM;
-      }
-      logUnsupported(this, type);
-      return TYPE_CHAT;
-    }
   }
 
   /**

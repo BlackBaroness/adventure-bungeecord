@@ -1,11 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>KyoriPowered/ci-cookbook:renovate-config#2025.10.17"
+    "config:recommended",
+    "group:all"
   ],
-  "ignoreDeps": [
-    "io.netty:netty-all",
-    "net.md-5:bungeecord-chat",
-    "org.spongepowered:spongeapi"
-  ]
+  "includeForks": true
 }

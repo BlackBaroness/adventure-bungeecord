@@ -34,7 +34,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.chat.ChatType;
 import net.kyori.adventure.chat.SignedMessage;
@@ -181,18 +180,6 @@ public class FacetAudience<V> implements Audience, Closeable {
       final Facet.BossBar<V> listener = entry.getValue();
       // Since boss bars persist through a refresh, the titles must be re-rendered
       listener.bossBarNameChanged(bar, bar.name(), bar.name());
-    }
-  }
-
-  @Override
-  public void sendMessage(final @NotNull Identity source, final @NotNull Component original, final @NotNull MessageType type) {
-    if (this.chat == null) return;
-
-    final Object message = this.createMessage(original, this.chat);
-    if (message == null) return;
-
-    for (final V viewer : this.viewers) {
-      this.chat.sendMessage(viewer, source, message, type);
     }
   }
 

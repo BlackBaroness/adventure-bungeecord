@@ -1,0 +1,14 @@
+[versions]
+adventure = "5.0.1"
+bungeecord = "1.21-R0.4"
+
+[libraries]
+adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+adventure-text-serializer-gson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "adventure" }
+adventure-text-serializer-legacy = { module = "net.kyori:adventure-text-serializer-legacy", version.ref = "adventure" }
+
+bungeecord-api = { module = "net.md-5:bungeecord-api", version.ref = "bungeecord" }
+bungeecord-chat = { module = "net.md-5:bungeecord-chat", version.ref = "bungeecord" }
+bungeecord-event = { module = "net.md-5:bungeecord-event", version.ref = "bungeecord" }
+bungeecord-serializer = { module = "net.md-5:bungeecord-serializer", version.ref = "bungeecord" }
+bungeecord-protocol = { module = "net.md-5:bungeecord-protocol", version.ref = "bungeecord" }

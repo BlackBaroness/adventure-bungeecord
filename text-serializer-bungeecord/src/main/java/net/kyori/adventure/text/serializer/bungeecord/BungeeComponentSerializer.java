@@ -41,7 +41,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @since 4.0.0
  */
-public final class BungeeComponentSerializer implements ComponentSerializer<Component, Component, BaseComponent[]> {
+public final class BungeeComponentSerializer implements ComponentSerializer<@NotNull Component, @NotNull Component, BaseComponent @NotNull []> {
   private static boolean SUPPORTED = true;
 
   static {
@@ -49,7 +49,6 @@ public final class BungeeComponentSerializer implements ComponentSerializer<Comp
   }
 
   private static final BungeeComponentSerializer MODERN = new BungeeComponentSerializer(GsonComponentSerializer.gson(), LegacyComponentSerializer.builder().hexColors().useUnusualXRepeatedCharacterHexFormat().build());
-  private static final BungeeComponentSerializer PRE_1_16 = new BungeeComponentSerializer(GsonComponentSerializer.builder().downsampleColors().emitLegacyHoverEvent().build(), LegacyComponentSerializer.legacySection());
 
   /**
    * Gets whether the component serializer has native support.
@@ -71,16 +70,6 @@ public final class BungeeComponentSerializer implements ComponentSerializer<Comp
    */
   public static BungeeComponentSerializer get() {
     return MODERN;
-  }
-
-  /**
-   * Gets a component serializer, with color downsampling.
-   *
-   * @return a component serializer
-   * @since 4.0.0
-   */
-  public static BungeeComponentSerializer legacy() {
-    return PRE_1_16;
   }
 
   /**

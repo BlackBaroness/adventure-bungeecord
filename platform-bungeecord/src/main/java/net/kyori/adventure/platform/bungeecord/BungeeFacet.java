@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArraySet;
-import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.permission.PermissionChecker;
 import net.kyori.adventure.platform.facet.Facet;
@@ -39,6 +38,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.flattener.ComponentFlattener;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.json.JSONOptions;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.util.TriState;
 import net.md_5.bungee.api.ChatMessageType;
@@ -74,7 +74,10 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
       .build()
   );
   static final BungeeComponentSerializer LEGACY = BungeeComponentSerializer.of(
-    GsonComponentSerializer.builder().downsampleColors().emitLegacyHoverEvent().build(),
+    GsonComponentSerializer.builder().editOptions(builder -> builder
+      .value(JSONOptions.EMIT_RGB, false)
+      .value(JSONOptions.EMIT_HOVER_EVENT_TYPE, JSONOptions.HoverEventValueMode.VALUE_FIELD)
+    ).build(),
     LegacyComponentSerializer.builder().flattener(FLATTENER).build()
   );
 
@@ -140,31 +143,15 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
 
     @Override
     public void sendMessage(final @NotNull ProxiedPlayer viewer, final @NotNull Identity source, final BaseComponent @NotNull [] message, final @NotNull Object type) {
-      if (type == MessageType.CHAT) {
-        viewer.sendMessage(source.uuid(), message);
-      } else {
         super.sendMessage(viewer, source, message, type);
-      }
     }
   }
 
   static class ChatPlayer extends Message implements Facet.Chat<ProxiedPlayer, BaseComponent[]> {
-    public @Nullable ChatMessageType createType(final @NotNull MessageType type) {
-      if (type == MessageType.CHAT) {
-        return ChatMessageType.CHAT;
-      } else if (type == MessageType.SYSTEM) {
-        return ChatMessageType.SYSTEM;
-      }
-      logUnsupported(this, type);
-      return null;
-    }
 
     @Override
     public void sendMessage(final @NotNull ProxiedPlayer viewer, final @NotNull Identity source, final BaseComponent @NotNull [] message, final @NotNull Object type) {
-      final ChatMessageType chat = type instanceof MessageType ? this.createType((MessageType) type) : ChatMessageType.SYSTEM; // if it's not a legacy adventure MessageType it doesn't matter cause its not used
-      if (chat != null) {
-        viewer.sendMessage(chat, message);
-      }
+      viewer.sendMessage(ChatMessageType.SYSTEM, message);
     }
   }
 
