@@ -150,7 +150,7 @@ class BungeeFacet<V extends CommandSender> extends FacetBase<V> {
 
     @Override
     public void sendMessage(final @NotNull ProxiedPlayer viewer, final @NotNull Identity source, final BaseComponent @NotNull [] message, final @NotNull Object type) {
-      viewer.sendMessage(ChatMessageType.SYSTEM, message);
+      viewer.sendMessage(ChatMessageType.CHAT, message);
     }
   }
 
