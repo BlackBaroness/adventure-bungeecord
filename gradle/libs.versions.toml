@@ -1,5 +1,5 @@
 [versions]
-adventure = "5.0.1"
+adventure = "5.1.1"
 bungeecord = "1.21-R0.4"
 
 [libraries]
